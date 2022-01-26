@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength, ValidateIf } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength, ValidateIf } from 'class-validator';
 import { BaseDto } from './core/base.dto';
+import { UserRoleEnum } from '../enums/user-role.enum';
 
 export class UserAuthDto extends BaseDto {
     @ApiProperty()
@@ -25,4 +26,10 @@ export class UserAuthDto extends BaseDto {
     @MinLength(4, { message: 'Minimum 4 characters for password is supported' })
     @MaxLength(20, { message: 'Maximum 20 characters for password is supported' })
     password: string;
+
+    @ApiProperty({ default: `${Object.values(UserRoleEnum).join(' | ')}` })
+    @IsOptional({ message: 'By default isRemembered to false' })
+    @IsString({ message: 'Must be an string value' })
+    @IsEnum(UserRoleEnum, { message: `Can be either ${Object.values(UserRoleEnum).join(' | ')}` })
+    role: UserRoleEnum;
 }

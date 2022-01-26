@@ -3,7 +3,7 @@ import { SystemException } from '../exceptions/system.exception';
 
 @Injectable()
 export class ExceptionService {
-    exception(status: HttpStatus = HttpStatus.BAD_REQUEST, message = 'Exception occured') {
+    exception(status: HttpStatus = HttpStatus.BAD_REQUEST, message = 'Exception occurred') {
         throw new SystemException({
             status,
             message,

@@ -1,6 +1,7 @@
 import { Document, SchemaTypes, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Transform } from 'class-transformer';
+import { UserRoleEnum } from '../enums/user-role.enum';
 
 @Schema({
     timestamps: true,
@@ -26,6 +27,9 @@ export class UserAuthEntity {
 
     @Prop({ type: SchemaTypes.Number, required: true, default: 1 })
     isActive: number;
+
+    @Prop({ type: SchemaTypes.String, required: true, default: UserRoleEnum.GENERAL })
+    role: string;
 
     @Prop({ type: SchemaTypes.ObjectId, ref: UserAuthEntity.name })
     createdBy: Types.ObjectId;

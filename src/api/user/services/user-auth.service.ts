@@ -36,17 +36,17 @@ export class UserAuthService {
             // error first callbacks for registration
             if (userInput.email && userInput.phone) {
                 this.exceptionService.exception(HttpStatus.BAD_REQUEST, 'Only phone or only email should be in the registration payload!!');
-            } else {
-                if (userInput.email) {
-                    const emailCount = await this.userModel.findOne({ email: userInput.email }).count().exec();
-                    if (!!emailCount) {
-                        this.exceptionService.exception(HttpStatus.BAD_REQUEST, 'Email already exists!!');
-                    }
-                } else {
-                    const phoneCount = await this.userModel.findOne({ phone: userInput.phone }).count().exec();
-                    if (!!phoneCount) {
-                        this.exceptionService.exception(HttpStatus.BAD_REQUEST, 'Phone already exists!!');
-                    }
+            }
+            if (userInput.email) {
+                const emailCount = await this.userModel.findOne({ email: userInput.email }).count().exec();
+                if (!!emailCount) {
+                    this.exceptionService.exception(HttpStatus.BAD_REQUEST, 'Email already exists!!');
+                }
+            }
+            if (userInput.phone) {
+                const phoneCount = await this.userModel.findOne({ phone: userInput.phone }).count().exec();
+                if (!!phoneCount) {
+                    this.exceptionService.exception(HttpStatus.BAD_REQUEST, 'Phone already exists!!');
                 }
             }
             // condition check success now continue with registration

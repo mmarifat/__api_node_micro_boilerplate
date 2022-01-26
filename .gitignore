@@ -40,3 +40,4 @@ package-lock.json
 
 # secret key
 env/jwtRS256.key
+/storage/

@@ -40,7 +40,6 @@ export class SystemExceptionFilter implements ExceptionFilter {
             const errorDto = new ErrorDto(null, systemErrorDto);
             responseDto = new ResponseDto(now, status, 'Error', errorDto, null);
         }
-
         response.status(status).json(responseDto);
     }
 }

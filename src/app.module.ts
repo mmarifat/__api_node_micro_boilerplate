@@ -1,5 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UserAuthModule } from './api/user/user-auth.module';
 import { publicUrls } from './public.url';
 import { EnvConfigModule } from './package/config-modules/env-config.module';
 import { MongoConfigModule } from './package/config-modules/mongo-config.module';
@@ -12,8 +11,10 @@ import { CommonServiceModule } from './package/config-modules/common-service.mod
 import { MongooseModule } from '@nestjs/mongoose';
 import LogSchema, { LogEntity } from './package/colllections/schemas/log.schema';
 import { CollectionEnum } from './package/enums/collection.enum';
+import { UserAuthModule } from './api/user/user-auth.module';
+import { UploadModule } from './api/upload/upload.module';
 
-const collectionModules = [UserAuthModule];
+const collectionModules = [UserAuthModule, UploadModule];
 
 @Module({
     imports: [
@@ -39,10 +40,10 @@ const collectionModules = [UserAuthModule];
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(JwtRequestMiddleware).forRoutes('*');
+        /*consumer.apply(JwtRequestMiddleware).forRoutes('*');
         consumer
             .apply(AuthVerifyMiddleware)
             .exclude(...publicUrls)
-            .forRoutes('*');
+            .forRoutes('*');*/
     }
 }
