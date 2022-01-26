@@ -23,7 +23,6 @@ async function bootstrap() {
         .setTitle('Nest Js Api BoilerPlate - MongoDB - ' + environment + ' mode')
         .setDescription('Nest Js Api BoilerPlate - MongoDB' + environment + ' mode')
         .setVersion('1.0')
-        .addTag(docTag)
         .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);

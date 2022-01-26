@@ -13,6 +13,7 @@ import LogSchema, { LogEntity } from './package/colllections/schemas/log.schema'
 import { CollectionEnum } from './package/enums/collection.enum';
 import { UserAuthModule } from './api/user/user-auth.module';
 import { UploadModule } from './api/upload/upload.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 const collectionModules = [UserAuthModule, UploadModule];
 
@@ -22,6 +23,7 @@ const collectionModules = [UserAuthModule, UploadModule];
         MongoConfigModule,
         RedisConfigModule,
         CommonServiceModule,
+        EventEmitterModule.forRoot(),
         MongooseModule.forFeature([
             {
                 name: LogEntity.name,
@@ -40,10 +42,10 @@ const collectionModules = [UserAuthModule, UploadModule];
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        /*consumer.apply(JwtRequestMiddleware).forRoutes('*');
+        consumer.apply(JwtRequestMiddleware).forRoutes('*');
         consumer
             .apply(AuthVerifyMiddleware)
             .exclude(...publicUrls)
-            .forRoutes('*');*/
+            .forRoutes('*');
     }
 }
