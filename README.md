@@ -51,10 +51,13 @@ $ yarn install
 $ yarn start
 
 # watch mode
-$ yarn start:dev
+$ yarn start:devevelopment
+
+# staging mode
+$ yarn start:staging
 
 # production mode
-$ yarn start:prod
+$ yarn start:production
 ```
 
 ## Test
