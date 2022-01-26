@@ -13,19 +13,21 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const configService = app.get(ConfigService);
     const port = configService.get<number>('PORT');
+    const environment = process.env.NODE_ENV;
 
     app.setGlobalPrefix('api/v1');
 
     // swagger documentation
+    const docTag = 'api-doc';
     const config = new DocumentBuilder()
-        .setTitle('Nest Js Api BoilerPlate - MongoDB')
-        .setDescription('Nest Js Api BoilerPlate - MongoDB')
+        .setTitle('Nest Js Api BoilerPlate - MongoDB - ' + environment + ' mode')
+        .setDescription('Nest Js Api BoilerPlate - MongoDB' + environment + ' mode')
         .setVersion('1.0')
-        .addTag('nest-js-mongodb')
+        .addTag(docTag)
         .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('nest-js-mongodb', app, document);
+    SwaggerModule.setup(docTag, app, document);
 
     app.enableCors();
     app.useGlobalFilters(new SystemExceptionFilter());
@@ -38,7 +40,8 @@ async function bootstrap() {
 
     await app.listen(port);
 
-    logger.log(`Documentation is running in http://localhost:${port}/nest-js-mongodb`);
+    logger.log(`Running in '${environment}' mode`);
+    logger.log(`Documentation is running in http://localhost:${port}/${docTag}`);
     logger.log(`Api is running in http://localhost:${port}`);
 }
 
