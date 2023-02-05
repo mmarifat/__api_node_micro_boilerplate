@@ -4,12 +4,25 @@
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
+    "allowJs": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true
+    "baseUrl": ".",
+    "incremental": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@packages/*": [
+        "libs/packages/src/*"
+      ],
+      "@gateway/*": [
+        "apps/gateway/*"
+      ],
+      "@auth/*": [
+        "apps/auth/*"
+      ]
+    }
   }
 }

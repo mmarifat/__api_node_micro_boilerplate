@@ -25,55 +25,37 @@
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-This project is build as a boilerplate for api project
+This project is built with monorepo microservice architecture
 
 ## Installation
-Do not update the @types/node package anytime
 ```bash
-Linux:
-$ sudo apt install redis-server
-$ sudo apt install -y imagemagick
-$ sudo apt-get install -y graphicsmagick
-
-Windows:
-$ https://github.com/microsoftarchive/redis/releases
-$ http://www.graphicsmagick.org/INSTALL-windows.html
-$ https://imagemagick.org/script/download.php
-
 Package:
-$ yarn install
+$ docker
+$ docker-compose
+```
+```bash
+ENV:
+$ cp .env.example .env (s up the contents)
 ```
 
 ## Running the app
 
 ```bash
-# watch mode
-$ yarn start:devevelopment
+# watch mode 
+$ docker compose -f docker-compose.dev.yml up
 
-# staging mode
-$ yarn start:staging
+# watch mode (with clear cache)
+$ docker compose -f docker-compose.dev.yml up --build -V --remove-orphans
 
 # production mode
-$ yarn start:production
-```
+$ docker compose up
 
-## Test
-
-```bash
-# unit tests
-$ yarn test
-
-# e2e tests
-$ yarn test:e2e
-
-# test coverage
-$ yarn test:cov
+# production mode (with clear cache)
+$ docker compose up --build -V --remove-orphans
 ```
 
 ## Maintainer
-- Name - Md Minhaz Ahamed Rifat
-- Email - mma.rifat66@gmail.com
-- Github - github.com/mmarifat
+- Md Minhaz Ahamed
 
 ## Support
 

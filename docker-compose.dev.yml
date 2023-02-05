@@ -1,0 +1,48 @@
+services:
+  gateway:
+    container_name: api-mongo-micro-gateway
+    build:
+      context: .
+      dockerfile: apps/gateway/Dockerfile
+      target: development
+    command: npm run start:dev gateway
+    env_file:
+      - ./.env
+    depends_on:
+      - auth
+      - redis
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+  auth:
+    container_name: api-mongo-micro-auth
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  redis:
+    container_name: api-mongo-micro-redis
+    image: redis:alpine
+    ports:
+      - 6379:6379
+  rabbitmq:
+    container_name: api-mongo-micro-rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+volumes:
+  mongodb_master_data:
+    driver: local

@@ -1,7 +1,7 @@
 # compiled output
 /dist
 /node_modules
-/src/package/custom-modules/nestjs-redis/node_modules
+/npm/nestjs-redis/node_modules
 
 # Logs
 logs
@@ -39,5 +39,11 @@ yarn.lock
 package-lock.json
 
 # secret key
-env/jwtRS256.key
+.env
+.env.development
+.env.staging
+.env.production
+process.json
+
+# storage
 /storage/
