@@ -1,5 +1,7 @@
 import { Global, Module } from '@nestjs/common';
-import { ProfileController } from '@gateway/src/profile/profile.controller';
+import { JwtModule } from '@nestjs/jwt';
+import { HttpAtStrategy, HttpRtStrategy } from '@packages/strategies/http';
+import { AuthController } from '@gateway/src/micro-auth/auth/auth.controller';
 import { RmqConfigModule } from '@packages/modules';
 import { ENUMS } from '@packages/enums';
 import MicroserviceEnum = ENUMS.MICROSERVICE.MicroserviceEnum;
@@ -7,10 +9,12 @@ import MicroserviceEnum = ENUMS.MICROSERVICE.MicroserviceEnum;
 @Global()
 @Module({
     imports: [
+        JwtModule.register({}),
         RmqConfigModule.register({
             name: MicroserviceEnum.AUTH,
         }),
     ],
-    controllers: [ProfileController],
+    controllers: [AuthController],
+    providers: [HttpAtStrategy, HttpRtStrategy],
 })
-export class ProfileModule {}
+export class AuthModule {}

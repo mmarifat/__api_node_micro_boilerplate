@@ -4,11 +4,11 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install --force
+RUN yarn install --force
 
 COPY . .
 
-RUN npm run build auth
+RUN yarn build
 
 FROM node:18-alpine as production
 
@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install --only=production --force
+RUN yarn install --prod --force
 
 COPY . .
 

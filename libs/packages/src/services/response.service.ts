@@ -41,7 +41,8 @@ export class ResponseService {
         data: Promise<[T[], number]>,
     ): Promise<ResponseDto> {
         const [apiData, total] = await data;
-        const pageResponseDto = new PageResponseDto(page, limit, total, apiData);
+        const pageCount = Math.ceil(total / limit);
+        const pageResponseDto = new PageResponseDto(page, limit, total, pageCount, apiData);
         return new ResponseDto(Date.now() - this.requestService.httpStartTime, status, message, null, null, pageResponseDto);
     }
 

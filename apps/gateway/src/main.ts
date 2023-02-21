@@ -8,6 +8,8 @@ import * as compression from 'compression';
 import { AppModule } from '@gateway/src/app.module';
 import { HttpFieldExceptionFilter, HttpSystemExceptionFilter } from '@packages/exceptions/http/filters';
 
+declare const module: any;
+
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const configService = app.get(ConfigService);
@@ -45,9 +47,14 @@ async function bootstrap() {
 
     await app.listen(port);
 
+    if (module.hot) {
+        module.hot.accept();
+        module.hot.dispose(() => app.close());
+    }
+
     const logger = new Logger('api-mongo-micro-gateway');
-    logger.verbose(`Running in '${environment}' mode`);
-    logger.verbose(`Api is running in http://localhost:${port}`);
-    logger.verbose(`Documentation is running in http://localhost:${port}/${docTag}`);
+    logger.verbose(`✩✩✩ Running in '${environment}' mode`);
+    logger.verbose(`✩✩✩ Api is running in http://localhost:${port}`);
+    logger.verbose(`✩✩✩ Documentation is running in http://localhost:${port}/${docTag}`);
 }
 bootstrap();

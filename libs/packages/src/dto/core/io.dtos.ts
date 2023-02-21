@@ -34,7 +34,13 @@ export namespace IoDtos {
     }
 
     export class PageResponseDto extends PageDto {
-        constructor(public pageNo: number = 0, public limit: number = 10, public count: number = 0, public data: any[] | any = []) {
+        constructor(
+            public pageNo: number = 0,
+            public limit: number = 10,
+            public count: number = 0,
+            public pageCount: number = 0,
+            public data: any[] | any = [],
+        ) {
             super(pageNo, limit);
         }
     }

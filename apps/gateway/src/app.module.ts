@@ -1,13 +1,14 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { CommonServiceModule, EnvConfigModule, MongoConfigModule, RedisConfigModule } from '@packages/modules';
-import { AuthModule } from '@gateway/src/auth';
-import { ProfileModule } from '@gateway/src/profile';
 import { LogInterceptor } from '@packages/interceptors/http';
 import { HttpAtGuard } from '@packages/guards/http';
 import { TapMiddleware } from '@packages/middlewares';
+import { HealthModule } from '@gateway/src/heath';
+import { AuthModule } from '@gateway/src/micro-auth/auth';
+import { ProfileModule } from '@gateway/src/micro-auth/profile';
 
-const collectionModules = [AuthModule, ProfileModule];
+const collectionModules = [HealthModule, AuthModule, ProfileModule];
 
 @Module({
     imports: [EnvConfigModule, CommonServiceModule, MongoConfigModule, RedisConfigModule, ...collectionModules],
