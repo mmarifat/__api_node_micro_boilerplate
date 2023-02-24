@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
@@ -11,14 +12,14 @@ import { HttpFieldExceptionFilter, HttpSystemExceptionFilter } from '@packages/e
 declare const module: any;
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create<NestExpressApplication>(AppModule);
     const configService = app.get(ConfigService);
 
     const port = configService.get<number>('APP_PORT');
     const environment = process.env.NODE_ENV;
 
     app.setGlobalPrefix('api/v1');
-
+    app.disable('x-powered-by', 'X-Powered-By');
     app.use(bodyParser.json({ limit: '100mb' }));
     app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
