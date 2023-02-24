@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
