@@ -1,7 +1,9 @@
 # compiled output
 /dist
 /node_modules
-/npm/nestjs-redis/node_modules
+**/node_modules/**
+_node_modules
+.pnp.cjs
 
 # Logs
 logs
@@ -17,6 +19,8 @@ lerna-debug.log*
 # Tests
 /coverage
 /.nyc_output
+.tmp
+_docpress
 
 # IDEs and editors
 /.idea
@@ -37,6 +41,9 @@ lerna-debug.log*
 # lock fiels
 yarn.lock
 package-lock.json
+__package_previews__
+.store
+privatePackages/store
 
 # secret key
 .env
@@ -47,3 +54,8 @@ process.json
 
 # storage
 /storage/
+
+# others
+.jest-cache
+.verdaccio-cache
+.turbo

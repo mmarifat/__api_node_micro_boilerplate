@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
+import type { Request } from 'express';
 import { Types } from 'mongoose';
 import { JwtHttpRequest, JwtRpcPayload } from '@packages/interfaces';
 

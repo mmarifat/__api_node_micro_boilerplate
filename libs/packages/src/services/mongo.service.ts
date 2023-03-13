@@ -1,6 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, models, Schema } from 'mongoose';
+import type { Model } from 'mongoose';
 import { ENUMS } from '@packages/enums';
 import CollectionEnum = ENUMS.PROJECT.CollectionEnum;
 import { ExceptionService } from '@packages/services/exception.service';
@@ -14,7 +15,7 @@ export class MongoService {
     }
 
     private modelBuilder<T>({ schema, collection }: { schema: Schema; collection: CollectionEnum | string }) {
-        if (models[collection]) delete models[collection];
+        if (models[collection]) return models[collection] as Model<T>;
         this.connection.model(collection, schema);
         return this.connection.model<T>(collection, schema);
     }

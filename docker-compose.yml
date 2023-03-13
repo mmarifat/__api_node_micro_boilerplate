@@ -5,7 +5,7 @@ services:
             context: .
             dockerfile: apps/gateway/Dockerfile
             target: development
-        command: yarn start:prod gateway
+        command: pnpm start:prod gateway
         env_file:
             - ./.env
         depends_on:
@@ -23,7 +23,7 @@ services:
             context: .
             dockerfile: ./apps/auth/Dockerfile
             target: development
-        command: yarn start:prod auth
+        command: pnpm start:prod auth
         env_file:
             - ./.env
         depends_on:

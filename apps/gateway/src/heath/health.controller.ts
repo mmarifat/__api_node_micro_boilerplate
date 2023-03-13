@@ -9,21 +9,24 @@ import {
     MemoryHealthIndicator,
     MicroserviceHealthIndicator,
     MongooseHealthIndicator,
+    TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
-import { Public } from '@packages/decorators';
 import { ENUMS } from '@packages/enums';
+import { IgnoreLogInterceptor, Public } from '@packages/decorators';
 import { MaintenanceHealthIndicator } from '@packages/health-indicators';
 import RedisClientEnum = ENUMS.RedisClientEnum;
 
 @ApiTags('Heath API')
 @Controller('health')
 @Public()
+@IgnoreLogInterceptor()
 export class HealthController {
     constructor(
         private readonly configService: ConfigService,
         private readonly health: HealthCheckService,
         private memoryHealth: MemoryHealthIndicator,
         private readonly mongodbHealth: MongooseHealthIndicator,
+        private readonly typeormHealth: TypeOrmHealthIndicator,
         private readonly maintenanceHealth: MaintenanceHealthIndicator,
         private readonly microserviceHealth: MicroserviceHealthIndicator,
     ) {}
@@ -55,6 +58,7 @@ export class HealthController {
     private get heathCheck() {
         return this.health.check([
             () => this.mongodbHealth.pingCheck('mongoose'),
+            () => this.typeormHealth.pingCheck('postgres'),
             () => this.maintenanceHealth.isHealthy('maintenance_mode'),
             () => this.memoryHealth.checkHeap('memory_heap', 200 * 1024 * 1024),
             () => this.memoryHealth.checkRSS('memory_rss', 3000 * 1024 * 1024),
