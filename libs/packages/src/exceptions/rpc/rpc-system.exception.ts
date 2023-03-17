@@ -3,6 +3,9 @@ import { BaseSystemExceptionBuilder } from '@packages/exceptions/base-system.exc
 
 export class RpcSystemException extends RpcException {
     constructor(error: any) {
+        if (error instanceof RpcSystemException) {
+            throw error;
+        }
         super(BaseSystemExceptionBuilder(error));
     }
 }
