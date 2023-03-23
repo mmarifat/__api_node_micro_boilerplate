@@ -1,10 +1,11 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { IoDtos } from '@packages/dto/core';
+import { HttpSystemException } from '@packages/exceptions';
 import ResponseDto = IoDtos.ResponseDto;
 import SystemErrorDto = IoDtos.SystemErrorDto;
 import ErrorDto = IoDtos.ErrorDto;
 
-@Catch(HttpException)
+@Catch()
 export class HttpSystemExceptionFilter implements ExceptionFilter {
     private readonly logger = new Logger(HttpSystemExceptionFilter.name);
 
@@ -19,6 +20,9 @@ export class HttpSystemExceptionFilter implements ExceptionFilter {
         } = request;
         const context = exception['context'] || '-/-';
 
+        if (!(exception instanceof HttpException)) {
+            exception = new HttpSystemException(exception);
+        }
         const statusCode = exception ? exception.getStatus() : <number>HttpStatus.INTERNAL_SERVER_ERROR;
         const message = exception.message || 'Internal error';
         let responseDto = exception.getResponse() as ResponseDto;

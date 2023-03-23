@@ -1,5 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { HttpFieldExceptionFilter, HttpSystemExceptionFilter } from '@packages/exceptions/http/filters';
 import { CommonServiceModule, EnvConfigModule, MongoConfigModule, PostgresConfigModule, RedisConfigModule } from '@packages/modules';
 import { LogInterceptor } from '@packages/interceptors/http';
 import { HttpAtGuard } from '@packages/guards/http';
@@ -13,6 +14,14 @@ const collectionModules = [HealthModule, AuthModule, ProfileModule];
 @Module({
     imports: [EnvConfigModule, CommonServiceModule, MongoConfigModule, PostgresConfigModule, RedisConfigModule, ...collectionModules],
     providers: [
+        {
+            provide: APP_FILTER,
+            useClass: HttpSystemExceptionFilter,
+        },
+        {
+            provide: APP_FILTER,
+            useClass: HttpFieldExceptionFilter,
+        },
         {
             provide: APP_INTERCEPTOR,
             useClass: LogInterceptor,

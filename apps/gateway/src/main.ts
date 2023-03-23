@@ -7,7 +7,6 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
 import { AppModule } from '@gateway/src/app.module';
-import { HttpFieldExceptionFilter, HttpSystemExceptionFilter } from '@packages/exceptions/http/filters';
 
 declare const module: any;
 
@@ -25,9 +24,6 @@ async function bootstrap() {
 
     app.enableCors();
     app.use(cookieParser());
-
-    app.useGlobalFilters(new HttpSystemExceptionFilter());
-    app.useGlobalFilters(new HttpFieldExceptionFilter());
 
     if (configService.get<string>('ENABLE_COMPRESSION') === 'true') app.use(compression());
 
